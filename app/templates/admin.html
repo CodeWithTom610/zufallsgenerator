@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    {{ bootstrap.load_css() }}
+    <style>
+        .fade-transition { transition: opacity 0.7s; opacity: 1; }
+        .fade-transition.fade-out { opacity: 0; pointer-events: none; }
+        .fade-transition.fade-in { opacity: 1; }
+        .table thead { color: #fff; background: #0b2f5c; }
+        .table tbody tr { background: rgba(255,255,255,0.07); color: #fff; }
+        .modal-backdrop { background: rgba(0,0,0,0.5); }
+        .rounded-table {
+            border-radius: 1rem;
+            overflow: hidden;
+            background: rgba(255,255,255,0.07);
+            border: 1.5px solid rgba(0,212,255,0.25);
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+        }
+        .rounded-table th, .rounded-table td {
+            background: rgba(11,47,92,0.97);
+            color: #fff;
+            border: none;
+        }
+        .rounded-table thead tr {
+            background: rgba(32,24,143,0.85);
+        }
+        .rounded-table tr {
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body style="min-height:100vh; background: linear-gradient(90deg,rgba(32,24,143,1) 7%,rgba(9,9,121,1) 19%,rgba(0,212,255,1) 100%); font-family: var(--bs-body-font-family);">
+    <div class="d-flex align-items-center justify-content-center" style="min-height:100vh;">
+        <div class="container shadow-lg fade-transition" id="admin-container"
+             style="background-color: rgba(11,47,92,0.97); border-radius: 1.5rem; max-width: 900px; padding: 2.5rem 2rem;">
+            <h2 class="mb-4 fw-bold text-center" style="color: var(--bs-light); letter-spacing: 1px;">Admin Dashboard</h2>
+            <div class="d-flex justify-content-end mb-3">
+                <button class="btn btn-outline-success fw-semibold" style="border-radius: 0.5rem;" data-bs-toggle="modal" data-bs-target="#createUserModal">
+                    + Benutzer erstellen
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h5 style="color: #fff;">1. Ausbildungsjahr</h5>
+                    <table class="table table-hover rounded-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Beruf</th>
+                                <th>Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in lj1 %}
+                            <tr>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.beruf }}</td>
+                                <td>
+                                    <form method="post" action="/delete_user/{{user.id}}/1" style="display:inline;">
+                                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="3" class="text-center">Keine Personen gefunden</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <h5 style="color: #fff;">2. Ausbildungsjahr</h5>
+                    <table class="table table-hover rounded-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Beruf</th>
+                                <th>Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in lj2 %}
+                            <tr>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.beruf }}</td>
+                                <td>
+                                    <form method="post" action="/delete_user/{{user.id}}/2" style="display:inline;">
+                                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="3" class="text-center">Keine Personen gefunden</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <h5 style="color: #fff;">3. Ausbildungsjahr</h5>
+                    <table class="table table-hover rounded-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Beruf</th>
+                                <th>Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in lj3 %}
+                            <tr>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.beruf }}</td>
+                                <td>
+                                    <form method="post" action="/delete_user/{{user.id}}/3" style="display:inline;">
+                                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="3" class="text-center">Keine Personen gefunden</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <h5 style="color: #fff;">4. Ausbildungsjahr</h5>
+                    <table class="table table-hover rounded-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Beruf</th>
+                                <th>Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in lj4 %}
+                            <tr>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.beruf }}</td>
+                                <td>
+                                    <form method="post" action="/delete_user/{{user.id}}/4" style="display:inline;">
+                                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="3" class="text-center">Keine Personen gefunden</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form method="post" action="/create_user">
+            <div class="modal-content" style="background-color: #0b2f5c; color: #fff;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createUserModalLabel">Benutzer erstellen</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="userName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lehrjahrSelect" class="form-label">Lehrjahr</label>
+                        <select class="form-select" id="lehrjahrSelect" name="lehrjahr" required>
+                            <option value="" disabled selected>Bitte wählen</option>
+                            <option value="1">1. Lehrjahr</option>
+                            <option value="2">2. Lehrjahr</option>
+                            <option value="3">3. Lehrjahr</option>
+                            <option value="4">4. Lehrjahr</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary">Erstellen</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+
+    {{ bootstrap.load_js() }}
+</body>
+</html>
