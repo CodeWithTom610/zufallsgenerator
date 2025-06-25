@@ -35,12 +35,35 @@
     <div class="d-flex align-items-center justify-content-center" style="min-height:100vh;">
         <div class="container shadow-lg fade-transition" id="admin-container"
              style="background-color: rgba(11,47,92,0.97); border-radius: 1.5rem; max-width: 900px; padding: 2.5rem 2rem;">
-            <h2 class="mb-4 fw-bold text-center" style="color: var(--bs-light); letter-spacing: 1px;">Admin Dashboard</h2>
+            <a href="{{url_for('main.zufallsgenerator')}}" class="btn btn-outline-danger">Zurück zum Generator</a> <h2 class="mb-4 fw-bold text-center" style="color: var(--bs-light); letter-spacing: 1px;">Admin Dashboard</h2>
             <div class="d-flex justify-content-end mb-3">
                 <button class="btn btn-outline-success fw-semibold" style="border-radius: 0.5rem;" data-bs-toggle="modal" data-bs-target="#createUserModal">
                     + Benutzer erstellen
                 </button>
             </div>
+
+            <!-- Beispiel für Lehrjahr 1 -->
+            <form method="post" action="{{ url_for('main.toggle_berufsschule', lehrjahr=1) }}" class="mb-2">
+                <input type="checkbox" name="berufsschule" onchange="this.form.submit()" {% if lj1 and lj1[0].berufsschule %}checked{% endif %}>
+                <label style="color:#fff;">Berufsschule (1. AJ ignorieren)</label>
+            </form>
+            
+            <form method="post" action="{{ url_for('main.toggle_berufsschule', lehrjahr=2) }}" class="mb-2">
+                <input type="checkbox" name="berufsschule2" onchange="this.form.submit()" {% if lj2 and lj2[0].berufsschule %}checked{% endif %}>
+                <label style="color:#fff;">Berufsschule (2. AJ ignorieren)</label>
+            </form>
+
+            <form method="post" action="{{ url_for('main.toggle_berufsschule', lehrjahr=3) }}" class="mb-2">
+                <input type="checkbox" name="berufsschule3" onchange="this.form.submit()" {% if lj3 and lj3[0].berufsschule %}checked{% endif %}>
+                <label style="color:#fff;">Berufsschule (3. AJ
+                     ignorieren)</label>
+            </form>
+
+            <form method="post" action="{{ url_for('main.toggle_berufsschule', lehrjahr=4) }}" class="mb-2">
+                <input type="checkbox" name="berufsschule4" onchange="this.form.submit()" {% if lj4 and lj4[0].berufsschule %}checked{% endif %}>
+                <label style="color:#fff;">Berufsschule (4. AJ ignorieren)</label>
+            </form>
+
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <h5 style="color: #fff;">1. Ausbildungsjahr</h5>
@@ -176,14 +199,20 @@
                         <label for="userName" class="form-label">Name</label>
                         <input type="text" class="form-control" id="userName" name="name" required>
                     </div>
+
                     <div class="mb-3">
-                        <label for="lehrjahrSelect" class="form-label">Lehrjahr</label>
+                        <label for="Beruf" class="form-label">Beruf</label>
+                        <input type="text" class="form-control" id="Beruf" name="Beruf" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="lehrjahrSelect" class="form-label">Ausbildungsjahr</label>
                         <select class="form-select" id="lehrjahrSelect" name="lehrjahr" required>
                             <option value="" disabled selected>Bitte wählen</option>
-                            <option value="1">1. Lehrjahr</option>
-                            <option value="2">2. Lehrjahr</option>
-                            <option value="3">3. Lehrjahr</option>
-                            <option value="4">4. Lehrjahr</option>
+                            <option value="1">1. Ausbildungsjahr</option>
+                            <option value="2">2. Ausbildungsjahr</option>
+                            <option value="3">3. Ausbildungsjahr</option>
+                            <option value="4">4. Ausbildungsjahr</option>
                         </select>
                     </div>
                 </div>

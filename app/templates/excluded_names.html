@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Ausgeschlossene Namen</title>
+    {{ bootstrap.load_css() }}
+</head>
+<body style="min-height:100vh; background: linear-gradient(90deg,rgba(32,24,143,1) 7%,rgba(9,9,121,1) 19%,rgba(0,212,255,1) 100%); font-family: var(--bs-body-font-family);">
+    <div class="d-flex align-items-center justify-content-center" style="min-height:100vh;">
+        <div class="container shadow-lg" style="background-color: rgba(11,47,92,0.97); border-radius: 1.5rem; max-width: 600px; padding: 2.5rem 2rem;">
+            <h2 class="mb-4 fw-bold text-center" style="color: var(--bs-light);">Ausgeschlossene Namen</h2>
+            <form method="post" class="mb-4 d-flex">
+                <input type="text" name="name" class="form-control me-2" placeholder="Name hinzufügen" required>
+                <button type="submit" class="btn btn-primary">Hinzufügen</button>
+            </form>
+            <table class="table table-hover rounded-table" style="color: #fff;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Aktion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for ex in excluded %}
+                    <tr>
+                        <td>{{ ex.name }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('main.delete_excluded', id=ex.id) }}" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="2" class="text-center">Keine ausgeschlossenen Namen</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ url_for('main.admin') }}" class="btn btn-secondary mt-3">Zurück zum Admin-Panel</a>
+        </div>
+    </div>
+    {{ bootstrap.load_js() }}
+</body>

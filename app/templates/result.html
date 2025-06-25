@@ -18,9 +18,41 @@
     <div class="d-flex align-items-center justify-content-center" style="min-height:100vh;">
         <div class="container d-flex flex-column align-items-center justify-content-center shadow-lg fade-transition"
              id="result-container"
-             style="background-color: rgba(11,47,92,0.97); border-radius: 1.5rem; max-width: 420px; padding: 2.5rem 2rem;">
-            <h2 class="mb-4 fw-bold text-center" style="color: var(--bs-light); letter-spacing: 1px;">Ergebnis</h2>
-            <p style="color:white;">Hier erscheint das Ergebnis oder weitere Inhalte.</p>
+             style="background-color: rgba(11,47,92,0.97); border-radius: 1.5rem; max-width: 540px; padding: 2.5rem 2rem; font-size: larger; font-weight: bolder;">
+            <h2 class="mb-4 fw-bold text-center" style="color: var(--bs-light); letter-spacing: 1px; font-size:55px;">Ergebnis</h2>
+            
+            <div class="mb-3 px-4 py-2 rounded shadow-sm w-100"
+                 style="background: var(--bs-primary); color: var(--bs-light); min-height: 54px; display: flex; align-items: center; justify-content: space-between;">
+                <div class="fw-semibold" style="color: white; font-size: larger; font-weight: bold;">2. OG</div>
+                <div class="fs-5">{{ names[0] }}</div>
+            </div>
+            <div class="mb-3 px-4 py-2 rounded shadow-sm w-100"
+                 style="background: var(--bs-primary); color: var(--bs-light); min-height: 54px; display: flex; align-items: center; justify-content: space-between;">
+                <div class="fw-semibold" style="color: white; font-size:larger; font-weight:bold;">1. OG</div>
+                <div class="fs-5">{{ names[1] }}</div>
+            </div>
+            <div class="mb-3 px-4 py-2 rounded shadow-sm w-100"
+                 style="background: var(--bs-primary); color: var(--bs-light); min-height: 54px; display: flex; align-items: center; justify-content: space-between;">
+                <div class="fw-semibold" style="color: white; font-size:larger; font-weight: bold;">Fräsmaschinen 1-8</div>
+                <div class="fs-5">{{ names[2] }}</div>
+            </div>
+            <div class="mb-3 px-4 py-2 rounded shadow-sm w-100"
+                 style="background: var(--bs-primary); color: var(--bs-light); min-height: 54px; display: flex; align-items: center; justify-content: space-between;">
+                <div class="fw-semibold" style="color: white; font-size: larger; font-weight: bold;">Drehmaschinen 1-8</div>
+                <div class="fs-5">{{ names[3] }}</div>
+            </div>
+            <div class="mb-3 px-4 py-2 rounded shadow-sm w-100"
+                 style="background: var(--bs-primary); color: var(--bs-light); min-height: 54px; display: flex; align-items: center; justify-content: space-between;">
+                <div class="fw-semibold" style="color: white; font-size: larger; font-weight: bold;">Werkstatt</div>
+                <div class="fs-5">{{ names[4] }}</div>
+            </div>
+            <div class="mb-3 px-4 py-2 rounded shadow-sm w-100"
+                 style="background: var(--bs-primary); color: var(--bs-light); min-height: 54px; display: flex; align-items: center; justify-content: space-between;">
+                <div class="fw-semibold" style="color: white; font-size: larger; font-weight: bold;">UG</div>
+                <div class="fs-5">{{ names[5] }}</div>
+            </div>
+            <br>
+            <h2 style="font-weight: bolder; color: white;">Viel Erfolg!</h2>
         </div>
     </div>
     <script>
