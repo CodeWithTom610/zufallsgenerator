@@ -1,0 +1,12 @@
+<form method="post" action="{{ url_for('main.create_user') }}">
+    <input type="text" name="name" required>
+    <select name="beruf" required>
+        <option value="EBT">EBT</option>
+        <!-- weitere Optionen -->
+    </select>
+    <select name="lehrjahr" required>
+        <option value="1">1</option>
+        <!-- weitere Optionen -->
+    </select>
+    <button type="submit">Erstellen</button>
+</form>

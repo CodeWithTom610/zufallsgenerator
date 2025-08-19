@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='BMW-Logo.ico') }}" type="image/x-icon">
     {{ bootstrap.load_css() }}
     <style>
         .fade-transition { transition: opacity 0.7s; opacity: 1; }
@@ -42,143 +43,61 @@
                 </button>
             </div>
 
-            <!-- Beispiel für Lehrjahr 1 -->
-            <form method="post" action="{{ url_for('main.toggle_berufsschule', lehrjahr=1) }}" class="mb-2">
-                <input type="checkbox" name="berufsschule" onchange="this.form.submit()" {% if lj1 and lj1[0].berufsschule %}checked{% endif %}>
-                <label style="color:#fff;">Berufsschule (1. AJ ignorieren)</label>
-            </form>
-            
-            <form method="post" action="{{ url_for('main.toggle_berufsschule', lehrjahr=2) }}" class="mb-2">
-                <input type="checkbox" name="berufsschule2" onchange="this.form.submit()" {% if lj2 and lj2[0].berufsschule %}checked{% endif %}>
-                <label style="color:#fff;">Berufsschule (2. AJ ignorieren)</label>
-            </form>
-
-            <form method="post" action="{{ url_for('main.toggle_berufsschule', lehrjahr=3) }}" class="mb-2">
-                <input type="checkbox" name="berufsschule3" onchange="this.form.submit()" {% if lj3 and lj3[0].berufsschule %}checked{% endif %}>
-                <label style="color:#fff;">Berufsschule (3. AJ
-                     ignorieren)</label>
-            </form>
-
-            <form method="post" action="{{ url_for('main.toggle_berufsschule', lehrjahr=4) }}" class="mb-2">
-                <input type="checkbox" name="berufsschule4" onchange="this.form.submit()" {% if lj4 and lj4[0].berufsschule %}checked{% endif %}>
-                <label style="color:#fff;">Berufsschule (4. AJ ignorieren)</label>
-            </form>
+            <div class="mb-4">
+                {% for lj in [1,2,3,4] %}
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox"
+                               id="nichtDaLehrjahr{{lj}}"
+                               {% if users|selectattr('lehrjahr', 'equalto', lj)|selectattr('nicht_da', 'equalto', True)|list|length == users|selectattr('lehrjahr', 'equalto', lj)|list|length and users|selectattr('lehrjahr', 'equalto', lj)|list|length > 0 %}
+                                   checked
+                               {% endif %}
+                               onchange="setLehrjahrNichtDa({{lj}}, this.checked)">
+                        <label class="form-check-label fw-bold" for="nichtDaLehrjahr{{lj}}">
+                            <span style="font-weight:bold; color: white;">Alle im {{lj}}. AJ „Nicht da!“</span>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
 
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <h5 style="color: #fff;">1. Ausbildungsjahr</h5>
-                    <table class="table table-hover rounded-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Beruf</th>
-                                <th>Aktion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for user in lj1 %}
-                            <tr>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.beruf }}</td>
-                                <td>
-                                    <form method="post" action="/delete_user/{{user.id}}/1" style="display:inline;">
-                                        <input type="hidden" name="user_id" value="{{ user.id }}">
-                                        <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr><td colspan="3" class="text-center">Keine Personen gefunden</td></tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    <!-- Beruf Dropdown -->
+                    <div class="dropdown mb-3">
+                        <button class="btn btn-info dropdown-toggle w-100" type="button" id="berufDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Beruf auswählen
+                        </button>
+                        <ul class="dropdown-menu w-100" aria-labelledby="berufDropdown">
+                            <li><a class="dropdown-item" href="#" onclick="selectBeruf('EBT')">EBT</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectBeruf('MECHA')">MECHA</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectBeruf('IM')">IM</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectBeruf('FERT')">FERT</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectBeruf('VMB')">VMB</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectBeruf('KFZ')">KFZ</a></li>
+                        </ul>
+                    </div>
 
-                <div class="col-md-6 mb-4">
-                    <h5 style="color: #fff;">2. Ausbildungsjahr</h5>
-                    <table class="table table-hover rounded-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Beruf</th>
-                                <th>Aktion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for user in lj2 %}
-                            <tr>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.beruf }}</td>
-                                <td>
-                                    <form method="post" action="/delete_user/{{user.id}}/2" style="display:inline;">
-                                        <input type="hidden" name="user_id" value="{{ user.id }}">
-                                        <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr><td colspan="3" class="text-center">Keine Personen gefunden</td></tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    <!-- Lehrjahr Dropdown -->
+                    <div class="dropdown mb-3">
+                        <button class="btn btn-warning dropdown-toggle w-100" type="button" id="lehrjahrDropdown" data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                            Lehrjahr auswählen
+                        </button>
+                        <ul class="dropdown-menu w-100" aria-labelledby="lehrjahrDropdown">
+                            <li><a class="dropdown-item" href="#" onclick="selectLehrjahr(1)">1. Ausbildungsjahr</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectLehrjahr(2)">2. Ausbildungsjahr</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectLehrjahr(3)">3. Ausbildungsjahr</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectLehrjahr(4)">4. Ausbildungsjahr</a></li>
+                        </ul>
+                    </div>
 
-                <div class="col-md-6 mb-4">
-                    <h5 style="color: #fff;">3. Ausbildungsjahr</h5>
-                    <table class="table table-hover rounded-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Beruf</th>
-                                <th>Aktion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for user in lj3 %}
-                            <tr>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.beruf }}</td>
-                                <td>
-                                    <form method="post" action="/delete_user/{{user.id}}/3" style="display:inline;">
-                                        <input type="hidden" name="user_id" value="{{ user.id }}">
-                                        <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr><td colspan="3" class="text-center">Keine Personen gefunden</td></tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="col-md-6 mb-4">
-                    <h5 style="color: #fff;">4. Ausbildungsjahr</h5>
-                    <table class="table table-hover rounded-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Beruf</th>
-                                <th>Aktion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for user in lj4 %}
-                            <tr>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.beruf }}</td>
-                                <td>
-                                    <form method="post" action="/delete_user/{{user.id}}/4" style="display:inline;">
-                                        <input type="hidden" name="user_id" value="{{ user.id }}">
-                                        <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr><td colspan="3" class="text-center">Keine Personen gefunden</td></tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                    <!-- Namen Dropdown -->
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="namenDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                            Namen auswählen
+                        </a>
+                        <ul class="dropdown-menu" id="namenDropdown">
+                            <!-- Wird per JS gefüllt -->
+                        </ul>
+                    </div>
                 </div>
 
             </div>
@@ -188,7 +107,7 @@
     <!-- Modal -->
     <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <form method="post" action="/create_user">
+        <form method="post" action="{{ url_for('main.create_user') }}">
             <div class="modal-content" style="background-color: #0b2f5c; color: #fff;">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createUserModalLabel">Benutzer erstellen</h5>
@@ -201,8 +120,16 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="Beruf" class="form-label">Beruf</label>
-                        <input type="text" class="form-control" id="Beruf" name="Beruf" required>
+                        <label for="berufSelect" class="form-label">Beruf</label>
+                        <select class="form-select" id="berufSelect" name="beruf" required>
+                            <option value="" disabled selected>Bitte wählen</option>
+                            <option value="EBT">EBT</option>
+                            <option value="MECHA">MECHA</option>
+                            <option value="IM">IM</option>
+                            <option value="FERT">FERT</option>
+                            <option value="VMB">VMB</option>
+                            <option value="KFZ">KFZ</option>
+                        </select>
                     </div>
 
                     <div class="mb-3">
@@ -226,5 +153,140 @@
     </div>
 
     {{ bootstrap.load_js() }}
+    <script>
+let currentBeruf = null;
+let selectedBeruf = null;
+let selectedLehrjahr = null;
+
+function fetchNames(beruf) {
+    fetch(`/get_names_by_beruf?beruf=${encodeURIComponent(beruf)}`)
+        .then(response => response.json())
+        .then(data => {
+            fillNamenDropdown(data.namen);
+        });
+}
+
+function fetchNamesByLehrjahr(lehrjahr) {
+    fetch(`/get_names_by_lehrjahr?lehrjahr=${lehrjahr}`)
+        .then(response => response.json())
+        .then(data => {
+            fillNamenDropdown(data.namen);
+        });
+}
+
+function selectBeruf(beruf) {
+    selectedBeruf = beruf;
+    selectedLehrjahr = null;
+    document.getElementById('lehrjahrDropdown').disabled = false;
+    document.getElementById('lehrjahrDropdown').innerText = 'Lehrjahr auswählen';
+    document.getElementById('namenDropdown').innerHTML = '';
+    document.getElementById('berufDropdown').innerText = beruf;
+}
+
+function selectLehrjahr(lehrjahr) {
+    selectedLehrjahr = lehrjahr;
+    document.getElementById('lehrjahrDropdown').innerText = lehrjahr + '. Ausbildungsjahr';
+    fetch(`/get_names_by_beruf_lehrjahr?beruf=${encodeURIComponent(selectedBeruf)}&lehrjahr=${lehrjahr}`)
+        .then(response => response.json())
+        .then(data => {
+            fillNamenDropdown(data.namen);
+        });
+}
+
+function fillNamenDropdown(namen) {
+    const namenDropdown = document.getElementById('namenDropdown');
+    namenDropdown.innerHTML = '';
+    if (namen.length === 0) {
+        namenDropdown.innerHTML = '<li><span class="dropdown-item">Keine Namen gefunden</span></li>';
+    } else {
+        namen.forEach(function(item) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <div class="dropdown-item">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span>${item.name}</span>
+                        <label class="form-check-label fw-bold ms-2">
+                            <input type="checkbox" class="form-check-input" onchange="nichtDa('${item.id}', this.checked)" ${item.nicht_da ? 'checked' : ''}>
+                            Nicht da!
+                        </label>
+                    </div>
+                    <div class="d-flex gap-2 mt-2">
+                        <button class="btn btn-sm btn-primary" onclick="heraufstufen('${item.id}')">Heraufstufen</button>
+                        <button class="btn btn-sm btn-danger" onclick="entfernen('${item.id}')">Entfernen</button>
+                    </div>
+                </div>
+            `;
+            namenDropdown.appendChild(li);
+        });
+    }
+    document.getElementById('namenDropdownBtn').click();
+}
+
+function heraufstufen(id) {
+    fetch('/heraufstufen', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+    }).then(res => res.json()).then(data => {
+        if (data.success) {
+            fetchNames(currentBeruf); // Aktualisiere die Liste
+        } else {
+            alert('Fehler beim Heraufstufen.');
+        }
+    });
+}
+
+function nichtDa(id, checked) {
+    fetch('/nicht_da', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id, checked})
+    }).then(res => res.json()).then(data => {
+        if (!data.success) {
+            alert('Fehler beim Setzen von "Nicht da!"');
+        }
+    });
+}
+
+function entfernen(id) {
+    if (confirm('Wirklich entfernen?')) {
+        fetch('/entfernen', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id})
+        }).then(res => res.json()).then(data => {
+            if (data.success) {
+                fetchNames(currentBeruf); // Aktualisiere die Liste
+            } else {
+                alert('Fehler beim Entfernen.');
+            }
+        });
+    }
+}
+
+function toggleBerufsschule(lehrjahr) {
+    fetch('/toggle_berufsschule_ajax', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({lehrjahr: lehrjahr})
+    }).then(res => res.json()).then(data => {
+        if (!data.success) {
+            alert('Fehler beim Umschalten der Berufsschule!');
+        }
+    });
+}
+
+function setLehrjahrNichtDa(lehrjahr, checked) {
+    fetch('/set_lehrjahr_nicht_da', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({lehrjahr: lehrjahr, checked: checked})
+    }).then(res => res.json()).then(data => {
+        if (!data.success) {
+            alert('Fehler beim Setzen von "Nicht da!" für das Lehrjahr!');
+        }
+    });
+}
+</script>
 </body>
 </html>

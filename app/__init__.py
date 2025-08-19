@@ -1,26 +1,20 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap5
+from .models import db
+from .routes import main
 
 def create_app():
     app = Flask(__name__)
     bootstrap = Bootstrap5(app)
 
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    # Konfiguration laden
-    app.config.from_object("app.config.Config")
-    
-    # Blueprints/Routes registrieren
-    from app.routes import main
+    db.init_app(app)
     app.register_blueprint(main)
 
-    # Datenbank initialisieren und Tabellen erstellen
-    from app.models import db
-    db.init_app(app)
     with app.app_context():
-        db.create_all()  # Erstellt die Tabellen in der Datenbank, falls sie nicht existieren
-
-    # Eventuelle weitere Initialisierungen hier
-
+        db.create_all()
 
     # Fehlerbehandlung hinzufügen, falls benötigt
     @app.errorhandler(404)

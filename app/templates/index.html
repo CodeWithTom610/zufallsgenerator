@@ -6,6 +6,7 @@
     <title>Zufallsgenerator</title>
 
     {{ bootstrap.load_css() }}
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
 </head>
 <body style="min-height:100vh; background: linear-gradient(90deg,rgba(32,24,143,1) 7%,rgba(9,9,121,1) 19%,rgba(0,212,255,1) 100%); font-family: var(--bs-body-font-family);">
 
@@ -30,6 +31,9 @@
                     <button type="submit" class="btn btn-primary fw-semibold" style="border-radius: 0.5rem; font-size: 1.1rem;" id="button-submit">
                         START
                     </button>
+                    <a class="btn btn-secondary fw-semibold" style="border-radius: 0.5rem; font-size: 1.1rem; margin-top: 15px;" href="{{ url_for('main.admin') }}">
+                        Zufallsgenerator Konfigurieren
+                    </a>
                 </div>
             </form>
             {% if result %}

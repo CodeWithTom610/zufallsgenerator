@@ -1,0 +1,22 @@
+{
+  "name": "Zufallsgenerator",
+  "short_name": "Zufall",
+  "description": "BMW Zufallsgenerator für Azubis",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b2f5c",
+  "theme_color": "#0b2f5c",
+  "icons": [
+    {
+      "src": "BMW-Logo.png",
+      "sizes": "150x150",
+      "type": "image/png"
+    },
+    {
+      "src": "BMW-Logo.ico",
+      "sizes": "48x48 64x64 128x128 256x256",
+      "type": "image/x-icon"
+    }
+  ],
+  "lang": "de"
+}
